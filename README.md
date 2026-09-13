@@ -2,6 +2,10 @@
 
 C++17 cellular automaton simulator rendered with raylib. Implements Conway's Game of Life (B3/S23), Seeds (B2/S), High Life (B36/S23), Maze (B3/S12345), and Diamoeba (B35678/S5678) behind a common `cellular_automaton` interface.
 
+![Demo](assets/demo.gif)
+
+Full video on YouTube: https://youtu.be/SsfAH9yT1z0
+
 ## Requirements
 
 - C++17 compiler (`clang++`)
