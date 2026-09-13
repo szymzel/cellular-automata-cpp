@@ -4,7 +4,8 @@ C++17 cellular automaton simulator rendered with raylib. Implements Conway's Gam
 
 ![Demo](assets/demo.gif)
 
-Full video on YouTube: https://youtu.be/SsfAH9yT1z0
+Full video on YouTube: [https://youtu.be/SsfAH9yT1z0
+](https://www.youtube.com/watch?v=_RjSH6VHFto)
 
 ## Requirements
 
