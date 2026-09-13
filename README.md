@@ -1,6 +1,6 @@
 # Cellular Automata
 
-C++17 cellular automaton simulator rendered with raylib. Implements Conway's Game of Life (B3/S23) and Seeds (B2/S) behind a common `cellular_automaton` interface.
+C++17 cellular automaton simulator rendered with raylib. Implements Conway's Game of Life (B3/S23), Seeds (B2/S), High Life (B36/S23), Maze (B3/S12345), and Diamoeba (B35678/S5678) behind a common `cellular_automaton` interface.
 
 ## Requirements
 
@@ -19,12 +19,17 @@ make
 ```sh
 make go
 # or
-./game
+./game [automaton] [pattern]
 ```
+
+`automaton`: `game_of_life`, `seeds`, `high_life`, `maze`, `diamoeba`
+`pattern`: `acorn`, `pulsar`, `default_scenario`, `glider_gun`, `random`, `all_colored_board`, `diehard`, `r_pentomino`, `rabbits`, `replicator`, `replicator_field` (High Life only), `showcase`
+
+Run without arguments to be prompted for both interactively.
 
 ## Controls
 
-- Hold left mouse button: set live cells under the cursor
+- Hold left mouse button: draw live cells under the cursor
 - Space: pause/resume
 
 ## Structure
@@ -36,10 +41,13 @@ src/
 ├── cellular_automaton.h / .cpp # interface: update(board&), neighbours()
 ├── automata/
 │   ├── game_of_life.h / .cpp
-│   └── seeds.h / .cpp
+│   ├── seeds.h / .cpp
+│   ├── high_life.h / .cpp
+│   ├── maze.h / .cpp
+│   └── diamoeba.h / .cpp
 ├── renderer.h / renderer.cpp   # draws the board
 ├── input.h / input.cpp         # mouse/keyboard handling
-└── initial_conditions.h / .cpp # starting patterns (Acorn, Pulsar, R-pentomino, random, ...)
+└── initial_conditions.h / .cpp # starting patterns (Acorn, Pulsar, default scenario, glider gun, random)
 ```
 
 Each `update()` reads from the board and writes to a separate copy, which is then swapped in, so all cells update against the same previous-generation state.

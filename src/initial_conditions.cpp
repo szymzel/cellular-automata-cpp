@@ -185,6 +185,98 @@ void GliderGun(board& grid){
     grid.setCell(23,18,1);
 }
 
+void Diehard(board& grid){
+    // "Die hard" - 7 komorek, ktore znikaja calkowicie po 130 pokoleniach
+    // zrodlo (RLE): x=8,y=3, 6bob$2o6b$bo3b3o!
+    grid.setCell(11,40,1);
+
+    grid.setCell(5,41,1);
+    grid.setCell(6,41,1);
+
+    grid.setCell(6,42,1);
+    grid.setCell(10,42,1);
+    grid.setCell(11,42,1);
+    grid.setCell(12,42,1);
+}
+
+void RPentomino(board& grid){
+    grid.setCell(161,150,1);
+    grid.setCell(162,150,1);
+    grid.setCell(160,151,1);
+    grid.setCell(161,151,1);
+    grid.setCell(161,152,1);
+}
+
+void Rabbits(board& grid){
+    // "Rabbits" (Andrew Trevorrow) - 9 komorek, chaotyczny wzrost trwajacy 17331 pokolen
+    // zanim ukladzik sie ustabilizuje - jeden z najdluzej rozwijajacych sie malych wzorcow
+    // zrodlo (RLE): x=7,y=3, o3b3o$3o2bob$bo!
+    grid.setCell(280,150,1);
+    grid.setCell(284,150,1);
+    grid.setCell(285,150,1);
+    grid.setCell(286,150,1);
+
+    grid.setCell(280,151,1);
+    grid.setCell(281,151,1);
+    grid.setCell(282,151,1);
+    grid.setCell(285,151,1);
+
+    grid.setCell(281,152,1);
+}
+
+void Showcase(board& grid){
+    // kilka znanych wzorcow rozrzuconych po planszy - dzialko strzela szybowcami,
+    // pulsar pulsuje, a acorn/diehard/R-pentomino/rabbits rozwijaja sie chaotycznie w tle,
+    // z czasem szybowce moga zderzac sie z resztą wzorcow
+    GliderGun(grid);
+    Pulsar(grid);
+    Acorn(grid);
+    Diehard(grid);
+    RPentomino(grid);
+    Rabbits(grid);
+}
+
+namespace {
+    // Jeden "zarodek" replikatora High Life (B36/S23), umieszczony lewym-gornym
+    // rogiem 5x5 bounding-boxu w (x0,y0). Uzywane przez Replicator i ReplicatorField.
+    void PlaceReplicatorSeed(board& grid, int x0, int y0){
+        grid.setCell(x0+2,y0+0,1);
+        grid.setCell(x0+3,y0+0,1);
+        grid.setCell(x0+4,y0+0,1);
+
+        grid.setCell(x0+1,y0+1,1);
+        grid.setCell(x0+4,y0+1,1);
+
+        grid.setCell(x0+0,y0+2,1);
+        grid.setCell(x0+4,y0+2,1);
+
+        grid.setCell(x0+0,y0+3,1);
+        grid.setCell(x0+3,y0+3,1);
+
+        grid.setCell(x0+0,y0+4,1);
+        grid.setCell(x0+1,y0+4,1);
+        grid.setCell(x0+2,y0+4,1);
+    }
+}
+
+void Replicator(board& grid){
+    // Replikator dla reguly High Life (B36/S23) - kopiuje sam siebie, tworzac
+    // rosnaca, symetryczna siatke swoich klonow. Nie dziala pod Game of Life/Seeds.
+    // zrodlo (RLE, Nathan Thompson): x=5,y=5, 2b3o$bo2bo$o3bo$o2bob$3o!
+    // umieszczony na srodku planszy, zeby miec jak najwiecej miejsca na ekspansje
+    PlaceReplicatorSeed(grid, 158, 88);
+}
+
+void ReplicatorField(board& grid){
+    // Cztery replikatory rozrzucone po planszy (High Life, B36/S23) - kazdy
+    // rosnie osobno w swoim rogu, a po pewnym czasie ich rozrastajace sie
+    // siatki klonow zderzaja sie na srodku, tworzac chaotyczna mieszanke
+    PlaceReplicatorSeed(grid, 40, 40);
+    PlaceReplicatorSeed(grid, 270, 40);
+    PlaceReplicatorSeed(grid, 40, 130);
+    PlaceReplicatorSeed(grid, 270, 130);
+}
+
 void Random(board& grid){
     std::random_device rd;
     std::mt19937 gen(rd());

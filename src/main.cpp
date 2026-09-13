@@ -9,16 +9,18 @@
 #include "automata/game_of_life.h"
 #include "automata/seeds.h"
 #include "automata/high_life.h"
+#include "automata/maze.h"
+#include "automata/diamoeba.h"
 
-const int W = 200;
-const int H = 130;
-const int cellSize = 6;
+const int W = 320;
+const int H = 180;
+const int cellSize = 4;
 
-bool IsPaused = 0;
+bool IsPaused = 1;
 
 int main(int argc, char* argv[]){
-    std::cout << "available cellular automata: game_of_life, seeds, high_life\n";
-    std::cout << "available initial conditions: acorn, pulsar, default_scenario, glider_gun, random, all_colored_board\n";
+    std::cout << "available cellular automata: game_of_life, seeds, high_life, maze, diamoeba\n";
+    std::cout << "available initial conditions: acorn, pulsar, default_scenario, glider_gun, random, all_colored_board, diehard, r_pentomino, rabbits, replicator, replicator_field (high_life only), showcase\n";
     std::cout << "use: " << argv[0] << " [automaton] [pattern]  (or without arguments - it will ask interactively)\n\n";
 
     std::string automaton_name = "game_of_life";
@@ -45,11 +47,15 @@ int main(int argc, char* argv[]){
         automaton = std::make_unique<seeds>("Seeds");
     } else if (automaton_name == "high_life"){
         automaton = std::make_unique<high_life>("High Life");
+    } else if (automaton_name == "maze"){
+        automaton = std::make_unique<maze>("Maze");
+    } else if (automaton_name == "diamoeba"){
+        automaton = std::make_unique<diamoeba>("Diamoeba");
     }
 
     std::string name = automaton->getName();
     InitWindow(W*cellSize,H*cellSize, name.c_str());
-    SetTargetFPS(60);
+    SetTargetFPS(120);
     board grid(W,H);
 
     if (pattern_name == "acorn"){
@@ -64,6 +70,18 @@ int main(int argc, char* argv[]){
         Random(grid);
     } else if (pattern_name == "all_colored_board"){
         AllColoredBoard(grid);
+    } else if (pattern_name == "diehard"){
+        Diehard(grid);
+    } else if (pattern_name == "r_pentomino"){
+        RPentomino(grid);
+    } else if (pattern_name == "rabbits"){
+        Rabbits(grid);
+    } else if (pattern_name == "replicator"){
+        Replicator(grid);
+    } else if (pattern_name == "replicator_field"){
+        ReplicatorField(grid);
+    } else if (pattern_name == "showcase"){
+        Showcase(grid);
     }
     
     int GenerationNumber = 0;
